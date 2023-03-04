@@ -3,12 +3,30 @@ package entities.services;
 import entities.Contract;
 import entities.Installment;
 
-public class ContractService {
-    public void processContract(Contract contract, Integer months)
-    {
-        for (int i = 0; i < months; i++) {
+import java.time.DateTimeException;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
-            contract.addInstallments(new Installment());
+public class ContractService {
+        private PaypalService paypalService;
+
+    public void processContract(Contract contract, Integer months) {
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        double interest = 0;
+        double paymentFee = 0;
+        double installments = contract.getTotalValue() / months;
+        for (int i = 1; i <= months; i++) {
+            LocalDate date = contract.getDate().plusMonths(i);
+            paypalService = new PaypalService();
+            interest = paypalService.interest(installments, i);
+            paymentFee = paypalService.paymentFee(installments + interest);
+            double quota = interest + paymentFee + installments;
+            contract.addInstallments(new Installment(quota, date));
         }
     }
 }
