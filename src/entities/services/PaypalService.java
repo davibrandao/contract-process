@@ -2,18 +2,16 @@ package entities.services;
 
 
 public class PaypalService implements OnlinePaymentService{
+    private static final double FEE_PERCENTAGE = 0.02;
+    private static final double MONTHLY_INTEREST = 0.01;
+
     @Override
     public Double paymentFee(Double amount) {
-        return amount * 0.02;
+        return amount * FEE_PERCENTAGE;
     }
 
     @Override
     public Double interest(Double amount, Integer months) {
-
-        double sum = 0;
-        for (int i = 0; i < months; i++) {
-            sum += amount * 0.01;
-        }
-        return sum;
+        return amount * MONTHLY_INTEREST * months;
     }
 }

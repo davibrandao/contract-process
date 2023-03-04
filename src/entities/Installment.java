@@ -6,9 +6,6 @@ public class Installment {
     public LocalDate dueDate;
     private Double amount;
 
-
-
-
     public Installment() {
     }
 

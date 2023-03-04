@@ -3,13 +3,8 @@ package entities.services;
 import entities.Contract;
 import entities.Installment;
 
-import java.time.DateTimeException;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
 
 public class ContractService {
         private PaypalService paypalService;
